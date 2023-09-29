@@ -1,13 +1,23 @@
 package com.cydeo.service;
 
+
 import com.cydeo.dto.UserDTO;
 
 import java.util.List;
 
-public interface UserService extends CrudService<UserDTO, String> {
+public interface UserService {
 
-    List<UserDTO> findManagers();
+    List<UserDTO> listAllUsers();
+    //UserDTO, not User (entity), because this method is called by UserController (view),
+    //means, Service layer is always DTO
 
-    List<UserDTO> findEmployees();
+    //Update button needs;
+    UserDTO findByUsername(String username);
+
+    //Create button needs;
+    void save(UserDTO dto);
+
+    UserDTO update(UserDTO dto);
+    void delete(String username);
 
 }
