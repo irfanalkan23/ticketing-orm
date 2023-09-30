@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationPropertiesBinding
 public class UserDtoConverter implements Converter<String, UserDTO> {
+    //this is UI. NOT the mapper bw dto and entity!
+    //create.html is sending String, User List table is looking for RoleDTO object!
 
     UserService userService;
 
@@ -18,7 +20,7 @@ public class UserDtoConverter implements Converter<String, UserDTO> {
 
     @Override
     public UserDTO convert(String source) {
-        return userService.findById(source);
+        return userService.findByUsername(source);
     }
 
 }
