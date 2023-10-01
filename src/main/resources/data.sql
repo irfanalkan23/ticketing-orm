@@ -1,15 +1,10 @@
-INSERT INTO roles(description) VALUES('Admin');
-INSERT INTO roles(description) VALUES('Manager');
-INSERT INTO roles(description) VALUES('Employee');
+insert into roles(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, description)
+VALUES ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Admin'),
+       ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Manager'),
+       ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, 'Employee');
 
--- Insert User 1
-INSERT INTO users (first_name, last_name, user_name, pass_word, enabled, phone, role_id, gender, is_deleted)
-VALUES ('John', 'Doe', 'john@example.com', 'Password123', true, '1234567890', 1, 'MALE', false);
 
--- Insert User 2
-INSERT INTO users (first_name, last_name, user_name, pass_word, enabled, phone, role_id, gender, is_deleted)
-VALUES ('Jane', 'Smith', 'jane@example.com', 'Password456', true, '9876543210', 2, 'FEMALE',false);
-
--- Insert User 3
-INSERT INTO users (first_name, last_name, user_name, pass_word, enabled, phone, role_id, gender, is_deleted)
-VALUES ('Bob', 'Johnson', 'bob@example.com', 'Password789', true, '4567891230', 3, 'MALE',false);
+insert into users(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, enabled,
+                  first_name, gender, last_name, user_name, role_id)
+values ('2022-01-05 00:00:00', 1, false, '2022-01-05 00:00:00', 1, true, 'admin', 'MALE', 'admin', 'admin@admin.com',
+        1);
