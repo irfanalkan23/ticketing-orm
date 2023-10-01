@@ -53,7 +53,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String username) {
+    public void deleteByUserName(String username) {
 
+        userRepository.deleteByUserName(username);
+
+    }
+
+    @Override
+    public void delete(String username) {
+        // I will not delete from db. I will just change the isDeleted flag (field) to "true"
+        User user = userRepository.findByUserName(username);
+        user.setIsDeleted(true);
+        userRepository.save(user);
     }
 }
