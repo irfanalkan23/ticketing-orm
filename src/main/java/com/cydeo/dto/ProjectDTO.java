@@ -15,6 +15,14 @@ import java.time.LocalDate;
 @Data
 public class ProjectDTO {
 
+    private Long id;    // we added this field because we had Error:
+    /*
+    Request processing failed: org.springframework.dao.InvalidDataAccessApiUsageException:
+    org.hibernate.TransientPropertyValueException:
+    object references an unsaved transient instance - save the transient instance before flushing :
+    com.cydeo.entity.Task.project -> com.cydeo.entity.Project
+     */
+
     @NotBlank
     private String projectName;
 
