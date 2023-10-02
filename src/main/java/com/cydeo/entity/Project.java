@@ -22,6 +22,7 @@ public class Project extends BaseEntity{
 
     private String projectName;
 
+    @Column(unique = true)      // TODO: 02/10/2023 needs exception handling
     private String projectCode;
 
     @ManyToOne(fetch = FetchType.LAZY)      //One Manager can have Many Projects. Many Projects to One Manager.
