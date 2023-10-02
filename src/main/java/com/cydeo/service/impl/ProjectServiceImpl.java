@@ -45,11 +45,31 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void update(ProjectDTO dto) {
+        //whatever not coming from dto, but database (entity) needs, we need to set those values
 
+        //get the project (we need id) from database. dto doesn't have id.
+        Project project = projectRepository.findByProjectCode(dto.getProjectCode());
+        //convert dto to entity
+        Project convertedProject = projectMapper.convertToEntity(dto);
+        //set the id to the convertedProject
+        convertedProject.setId(project.getId());
+        //set the project status, also not coming from the form
+        convertedProject.setProjectStatus(project.getProjectStatus());
+        //save it
+        projectRepository.save(convertedProject);
     }
 
     @Override
     public void delete(String code) {
+        Project project = projectRepository.findByProjectCode(code);
+        project.setIsDeleted(true);
+        projectRepository.save(project);
+    }
 
+    @Override
+    public void complete(String projectCode) {
+        Project project = projectRepository.findByProjectCode(projectCode);
+        project.setProjectStatus(Status.COMPLETE);
+        projectRepository.save(project);
     }
 }
