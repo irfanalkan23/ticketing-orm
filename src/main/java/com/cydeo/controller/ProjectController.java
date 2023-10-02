@@ -1,6 +1,7 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
 import jakarta.validation.Valid;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -88,19 +91,20 @@ public class ProjectController {
         return "redirect:/project/create";
 
     }
-//
-//    @GetMapping("/manager/project-status")
-//    public String getProjectByManager(Model model) {
-//
+
+    @GetMapping("/manager/project-status")
+    public String getProjectByManager(Model model) {
+        //a manager is supposed to be logged in, and he/she is checking the project status
+        //we don't have the security yet, so, we hard code that part here
 //        UserDTO manager = userService.findById("john@cydeo.com");
-//
-//        List<ProjectDTO> projects = projectService.getCountedListOfProjectDTO(manager);
-//
-//        model.addAttribute("projects", projects);
-//
-//        return "/manager/project-status";
-//    }
-//
+
+        List<ProjectDTO> projects = projectService.listAllProjectDetails();
+
+        model.addAttribute("projects", projects);
+
+        return "/manager/project-status";
+    }
+
 //    @GetMapping("/manager/complete/{projectCode}")
 //    public String managerCompleteProject(@PathVariable("projectCode") String projectCode) {
 //        projectService.complete(projectService.findById(projectCode));
