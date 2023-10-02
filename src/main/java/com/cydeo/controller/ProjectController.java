@@ -34,23 +34,23 @@ public class ProjectController {
         return "/project/create";
 
     }
-//
-//    @PostMapping("/create")
-//    public String insertProject(@Valid @ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model) {
-//
-//        if (bindingResult.hasErrors()) {
-//
-//            model.addAttribute("projects", projectService.findAll());
-//            model.addAttribute("managers", userService.findManagers());
-//
-//            return "/project/create";
-//
-//        }
-//
-//        projectService.save(project);
-//        return "redirect:/project/create";
-//
-//    }
+
+    @PostMapping("/create")
+    public String insertProject(@Valid @ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("projects", projectService.listAllProjects());
+            model.addAttribute("managers", userService.listAllByRole("manager"));
+
+            return "/project/create";
+
+        }
+
+        projectService.save(project);
+        return "redirect:/project/create";
+
+    }
 //
 //    @GetMapping("/delete/{projectcode}")
 //    public String deleteProject(@PathVariable("projectcode") String projectcode) {
