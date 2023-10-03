@@ -75,7 +75,12 @@ public class ProjectServiceImpl implements ProjectService {
     public void delete(String code) {
         Project project = projectRepository.findByProjectCode(code);
         project.setIsDeleted(true);
+        //when we delete a project, the unique project code needs to be usable by another project
+        project.setProjectCode(project.getProjectCode() + "-" + project.getId());
         projectRepository.save(project);
+
+        //when a project is deleted, all the tasks of that project should be deleted as well
+        taskService.deleteByProject(projectMapper.convertToDto(project));
     }
 
     @Override
