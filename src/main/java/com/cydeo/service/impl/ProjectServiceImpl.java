@@ -88,6 +88,9 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findByProjectCode(projectCode);
         project.setProjectStatus(Status.COMPLETE);
         projectRepository.save(project);
+
+        //when a project is deleted, all the tasks of that project should be deleted as well
+        taskService.completeByProject(projectMapper.convertToDto(project));
     }
 
     //list all the projects assigned to a certain manager
