@@ -9,6 +9,7 @@ import com.cydeo.repository.UserRepository;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,10 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final ProjectService projectService;
     private final TaskService taskService;
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, ProjectService projectService, TaskService taskService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, TaskService taskService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.projectService = projectService;
+        this.projectService = projectService;   //@Lazy above because of circular dependency; means wait until I use it
         this.taskService = taskService;
     }
 
@@ -73,6 +74,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(username);
         if (checkIfUserCanBeDeleted(user)){
             user.setIsDeleted(true);
+            user.setUserName(user.getUserName() + "-" + user.getId());  //so that we can use the same username again
             userRepository.save(user);
         }
         // TODO: 03/10/2023 we will add exceptions at API phase
