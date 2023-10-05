@@ -60,10 +60,14 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/user/**").hasRole("ADMIN")   //only ADMIN has access to all the UserController methods
-                        .requestMatchers("/project/**").hasRole("MANAGER")  //hasRole() includes "ROLE_" prefix
-                        .requestMatchers("/task/employee/**").hasRole("EMPLOYEE")
-                        .requestMatchers("/task/**").hasRole("MANAGER")
+//                        .requestMatchers("/user/**").hasRole("Admin")   //only ADMIN has access to all the UserController methods
+                        .requestMatchers("/user/**").hasAuthority("Admin")   //only ADMIN has access to all the UserController methods
+//                        .requestMatchers("/project/**").hasRole("Manager")  //hasRole() includes "ROLE_" prefix
+                        .requestMatchers("/project/**").hasAuthority("Manager")  //hasRole() includes "ROLE_" prefix
+//                        .requestMatchers("/task/employee/**").hasRole("Employee")
+                        .requestMatchers("/task/employee/**").hasAuthority("Employee")
+//                        .requestMatchers("/task/**").hasRole("Manager")
+                        .requestMatchers("/task/**").hasAuthority("Manager")
 //                        .requestMatchers("/task/**").hasAnyRole("EMPLOYEE", "ADMIN")
 //                        .requestMatchers("/task/**").hasAuthority("ROLE_EMPLOYEE")    //hasAuthority() is NOT putting prefix
 
