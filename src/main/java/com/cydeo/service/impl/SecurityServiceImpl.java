@@ -26,6 +26,7 @@ public class SecurityServiceImpl implements SecurityService {
             throw new UsernameNotFoundException("This user does not exist");
         }
 
+        //I need to map my own user to Spring's user:
         return new UserPrincipal(user);
     }
 }
