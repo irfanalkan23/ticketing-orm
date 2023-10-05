@@ -25,7 +25,8 @@ public class User extends BaseEntity {
     private boolean enabled;
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne         // I deleted (fetch = FetchType.LAZY) from here,
+    // because I got "org.hibernate.LazyInitializationException: could not initialize proxy" error when I hit Login
     @JoinColumn(name = "role_id")
     private Role role;
 
