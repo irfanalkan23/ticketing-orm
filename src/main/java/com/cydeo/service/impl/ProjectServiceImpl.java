@@ -96,7 +96,7 @@ public class ProjectServiceImpl implements ProjectService {
     //list all the projects assigned to a certain manager
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
-        UserDTO currentUserDTO = userService.findByUsername("harold@manager.com");  //harold will come from security
+        UserDTO currentUserDTO = userService.findByUsername("mike@gmail.com");  //harold will come from security
         User user = userMapper.convertToEntity(currentUserDTO);
         List<Project> list = projectRepository.findAllByAssignedManager(user);
         //this list doesn't have any task counts. following code assigns
