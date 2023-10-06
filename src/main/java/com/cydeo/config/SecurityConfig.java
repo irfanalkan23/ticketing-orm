@@ -57,8 +57,7 @@ public class SecurityConfig {
                                 "/login",
                                 "/fragments/**",
                                 "/assets/**",
-                                "images/**")
-                        .permitAll() // Allow access to these endpoints and directories without authentication
+                                "images/**").permitAll() // Allow access to these endpoints and directories without authentication
                         .anyRequest().authenticated()
                 )
 //                .formLogin(Customizer.withDefaults());

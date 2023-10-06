@@ -12,6 +12,7 @@ import com.cydeo.repository.TaskRepository;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -96,8 +97,14 @@ public class ProjectServiceImpl implements ProjectService {
     //list all the projects assigned to a certain manager
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
-        UserDTO currentUserDTO = userService.findByUsername("mike@gmail.com");  //harold will come from security
+
+        //bring the logged-in username
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        UserDTO currentUserDTO = userService.findByUsername(username);
+
         User user = userMapper.convertToEntity(currentUserDTO);
+
         List<Project> list = projectRepository.findAllByAssignedManager(user);
         //this list doesn't have any task counts. following code assigns
 
