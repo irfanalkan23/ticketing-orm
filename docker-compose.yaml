@@ -1,0 +1,52 @@
+#docker-compose.yaml enables running all services at the same time
+#building images and creating containers for each of them
+
+version: "3.7"
+services:
+  mypostgres:
+#    if using ready image; use "image:", and just write the official image name
+    image: postgres
+#    we can give a custom container name. not a must.
+    container_name: mypostgres
+    ports:
+# assign "host port" : to "container port"
+# we can assign more than one port, that's why it is array --> "-"
+      - "5435:5432"
+    restart: always
+    environment:
+#    https://hub.docker.com/_/postgres --> Environment variables -->
+      POSTGRES_USER: "postgres"
+#      POSTGRES_PASSWORD: "admin"
+      POSTGRES_PASSWORD: "4223"
+      POSTGRES_DB: "ticketing-app"
+    networks:
+      - webnet
+    volumes:
+# "put the initdb (defined below) data in "/var/lib/postgres/data" which is common
+      - initdb:/var/lib/postgres/data
+  ticketing-app:
+#    not using a ready image, I'm creating an image;
+#    "check the Dockerfile and create image:" in the current (root) directory --> "."
+    build: .
+#    give a name;
+    container_name: ticketingapp
+    ports:
+      - "8080:8080"
+# "first start mypostgres, then start ticketingapp";
+    depends_on:
+      - mypostgres
+# "I need to talk to database, which channel?" --> webnet
+    networks:
+      - webnet
+
+#for persistence
+volumes:
+#  define the volume name, give a name; and we can use it in postgres above "volumes: - initdb:/var/lib/postgres/data"
+  initdb:
+
+#networks is to enable communication between services
+networks:
+#  let's give a name to network --> "webnet"
+  webnet:
+#    most common and secure one is bridge
+    driver: bridge
